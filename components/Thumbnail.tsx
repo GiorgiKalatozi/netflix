@@ -3,6 +3,8 @@ import { Movie } from "../typings";
 
 interface Props {
   movie: Movie;
+  //   when using firebase
+  //   movie: Movie | DocumentData;
 }
 
 const Thumbnail = ({ movie }: Props) => {
