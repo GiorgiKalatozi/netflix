@@ -5,6 +5,7 @@ import LandingBG from "../assets/landing-bg.webp";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
+import useAuth from "../hooks/useAuth";
 
 interface Inputs {
   email: string;
@@ -13,6 +14,7 @@ interface Inputs {
 
 const Login = () => {
   const [login, setLogin] = useState(false);
+  const { signIn, signUp } = useAuth();
 
   const {
     register,
@@ -20,8 +22,12 @@ const Login = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
+    if (login) {
+      await signIn(email, password);
+    } else {
+      await signUp(email, password);
+    }
   };
 
   return (
@@ -77,12 +83,19 @@ const Login = () => {
             )}
           </label>
         </div>
-        <button className="w-full rounded bg-[#e50914] py-3 font-semibold">
+        <button
+          onClick={() => setLogin(true)}
+          className="w-full rounded bg-[#e50914] py-3 font-semibold"
+        >
           Sign In
         </button>
         <div className="text-[gray]">
-          New to Netflix?
-          <button type="submit" className="text-white hover:underline">
+          <span>New to Netflix?</span>
+          <button
+            onClick={() => setLogin(false)}
+            type="submit"
+            className="text-white hover:underline"
+          >
             Sign up now
           </button>
         </div>

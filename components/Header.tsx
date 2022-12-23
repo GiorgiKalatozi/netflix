@@ -4,9 +4,11 @@ import smile from "../assets/smile.png";
 import logo from "../assets/logo.svg";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,9 +48,14 @@ const Header = () => {
         <MagnifyingGlassIcon className="hidden h-6 w-6 sm:inline" />
         <p className="hidden lg:inline">Kids</p>
         <BellIcon className="h-6 w-6" />
-        <Link href="/account">
-          <Image className="cursor-pointer rounded" src={smile} alt="smile" />
-        </Link>
+        {/* <Link href="/account"> */}
+        <Image
+          onClick={logout}
+          className="cursor-pointer rounded"
+          src={smile}
+          alt="smile"
+        />
+        {/* </Link> */}
       </div>
     </header>
   );
