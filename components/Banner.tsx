@@ -13,8 +13,8 @@ interface Props {
 
 const Banner = ({ netflixOriginals }: Props) => {
   const [movie, setMovie] = useState<Movie | null>(null);
-  const [showModal, setShowModal] = useRecoilState(modalState);
   const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
+  const [showModal, setShowModal] = useRecoilState(modalState);
 
   useEffect(() => {
     setMovie(
@@ -44,7 +44,10 @@ const Banner = ({ netflixOriginals }: Props) => {
         </button>
         <button
           className="banner-btn bg-[gray]/70"
-          onClick={() => setShowModal(true)}
+          onClick={() => {
+            setCurrentMovie(movie);
+            setShowModal(true);
+          }}
         >
           More Info <InformationCircleIcon className="h-5 w-5 md:h-8 md:w-8" />
         </button>
